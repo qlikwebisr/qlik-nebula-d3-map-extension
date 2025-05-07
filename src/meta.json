@@ -1,0 +1,8 @@
+{
+  "name": "neb-test",
+  "description": "neb-test example",
+  "icon": "map",
+  "type": "visualization",
+  "version": 1.0,
+  "preview": ""
+}

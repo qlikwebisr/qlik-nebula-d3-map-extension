@@ -1,0 +1,54 @@
+{
+  "name": "neb-test",
+  "version": "0.1.0",
+  "description": "",
+  "license": "MIT",
+  "author": {
+    "name": "qlikwebisr",
+    "email": "64928424+qlikwebisr@users.noreply.github.com"
+  },
+  "keywords": [
+    "qlik",
+    "nebula",
+    "stardust"
+  ],
+  "files": [
+    "dist",
+    "neb-test.json",
+    "neb-test.qext",
+    "neb-test.js"
+  ],
+  "engines": {
+    "node": ">=18.10.0"
+  },
+  "main": "dist/neb-test.js",
+  "module": "dist/neb-test.esm.js",
+  "scripts": {
+    "build": "nebula build",
+    "lint": "eslint src",
+    "start": "nebula serve",
+    "sense": "nebula sense --meta src/meta.json",
+    "test:e2e": "playwright test",
+    "test:e2e:report": "playwright show-report test/integration/test-report"
+  },
+  "devDependencies": {
+    "@nebula.js/cli": "5.11.0",
+    "@nebula.js/cli-build": "5.11.0",
+    "@nebula.js/cli-sense": "5.11.0",
+    "@nebula.js/cli-serve": "5.11.0",
+    "@playwright/test": "^1.28.1",
+    "@qlik/sdk": "^0.12.0",
+    "eslint": "7.27.0",
+    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-plugin-import": "2.23.4",
+    "eslint-plugin-mocha": "9.0.0"
+  },
+  "peerDependencies": {
+    "@nebula.js/stardust": ">=5.0.0"
+  },
+  "dependencies": {
+    "d3": "^7.9.0",
+    "d3-geo": "^3.1.0",
+    "topojson-client": "^3.1.0"
+  }
+}

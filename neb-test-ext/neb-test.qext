@@ -1,0 +1,13 @@
+{
+  "name": "neb-test",
+  "version": "0.1.0",
+  "description": "",
+  "author": {
+    "name": "qlikwebisr",
+    "email": "64928424+qlikwebisr@users.noreply.github.com"
+  },
+  "icon": "map",
+  "preview": "",
+  "type": "visualization",
+  "supernova": true
+}

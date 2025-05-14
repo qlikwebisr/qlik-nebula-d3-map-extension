@@ -23,22 +23,16 @@ export default function supernova() {
       const layout = useLayout();
       
       // Get the selections object to make selections in Qlik Sense
-      const selections = useSelections();
+      //const selections = useSelections();
       
       // Store selected element (used for selections)
-      let selectedElement = null;
+      //let selectedElement = null;
       
       // Create a function to handle selections
       const handleSelect = async (event, pointData) => {
         // Log point data
         console.log("Selected point:", pointData);
-
-         // Cancel any active selections first
-         
-   
-        //========================================
         
-        // Use fieldState if needed for checking selection status
         const field = await app.getField('Address');
 
         //https://qlik.dev/apis/json-rpc/qix/field/#selectvalues

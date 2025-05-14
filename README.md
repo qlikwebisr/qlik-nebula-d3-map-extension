@@ -1,6 +1,6 @@
 # Map-nebula-extension
 
-## Qlik Sense Nebula.js extension that use D3.js map
+## Qlik Sense Nebula.js extension that uses a D3 D3.js map
 
 ## Instalation and Development
 For local machine use Qlik Desktop

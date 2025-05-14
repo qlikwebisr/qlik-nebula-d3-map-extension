@@ -1,5 +1,5 @@
 {
-  "name": "neb-test",
+  "name": "map-nebula-extension",
   "description": "neb-test example",
   "icon": "map",
   "type": "visualization",

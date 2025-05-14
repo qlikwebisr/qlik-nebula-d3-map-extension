@@ -1,5 +1,5 @@
 // Main entry point of the extension
-import { useElement, useLayout, useEffect, useSelections } from "@nebula.js/stardust";
+import { useElement, useLayout, useEffect, useSelections, useApp } from "@nebula.js/stardust";
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import properties from "./object-properties";
@@ -15,6 +15,9 @@ export default function supernova() {
     component() {
       // Get the HTML element where we'll render the map
       const element = useElement();
+
+      // Get the Qlik app object (used for selections)
+      const app = useApp();
       
       // Get the layout of the object (which contains our data)
       const layout = useLayout();
@@ -22,13 +25,40 @@ export default function supernova() {
       // Get the selections object to make selections in Qlik Sense
       const selections = useSelections();
       
+      // Store selected element (used for selections)
+      let selectedElement = null;
+      
+      // Create a function to handle selections
+      const handleSelect = async (event, pointData) => {
+        // Log point data
+        console.log("Selected point:", pointData);
+
+         // Cancel any active selections first
+         
+   
+        //========================================
+        
+        // Use fieldState if needed for checking selection status
+        const field = await app.getField('Address');
+
+        //https://qlik.dev/apis/json-rpc/qix/field/#selectvalues
+        //qFieldValues, qToggleMode, qSoftLock
+        await field.selectValues([{ 
+          qIsNumeric: false,
+          qText: pointData.address,
+          qElemNumber: pointData.qElemNumber
+        }], true, false);
+        
+
+      };
+      
       // Use React-like useEffect hook to create and update the map
       useEffect(() => {
         // Clear the element before rendering
         element.innerHTML = "";
         
         // Create the map when the component renders
-        createMap(element, layout, selections);
+        createMap(element, layout, handleSelect);
         
         // Cleanup function that will run when component is destroyed
         return () => {
@@ -40,7 +70,7 @@ export default function supernova() {
 }
 
 // Function to create the US map with address points
-async function createMap(element, layout, selections) {
+async function createMap(element, layout, handleSelect) {
   // Check if we have data
   if (!layout.qHyperCube || !layout.qHyperCube.qDataPages || !layout.qHyperCube.qDataPages[0]) {
     element.innerHTML = "<div>No data available</div>";
@@ -300,22 +330,22 @@ async function createMap(element, layout, selections) {
         d3.select(element).selectAll(".tooltip").remove();
       })
       .on("click", function(event, d) {
-        // Simple function to log the value on click
-        console.log(`Clicked point with value: ${d.value}`);
-        
-        // Visual feedback for clicking (highlight the circle)
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .attr("r", circleScale(d.value) * 1.3)
-          .attr("stroke", "#333")
-          .attr("stroke-width", 3)
-          .transition()
-          .duration(200)
-          .attr("r", circleScale(d.value))
-          .attr("stroke", "#fff")
-          .attr("stroke-width", 1.5);
-      });
+  // Call the selection handler from the component
+  handleSelect(event, d);
+  
+  // Visual feedback for clicking (highlight the circle)
+  d3.select(this)
+    .transition()
+    .duration(200)
+    .attr("r", circleScale(d.value) * 1.3)
+    .attr("stroke", "#333")
+    .attr("stroke-width", 3)
+    .transition()
+    .duration(200)
+    .attr("r", circleScale(d.value))
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 1.5);
+})
     
     // Add a legend for circle sizes
     const legendX = 50;
